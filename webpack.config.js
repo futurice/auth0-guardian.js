@@ -16,10 +16,5 @@ module.exports = {
     libraryTarget: 'umd',
     library: 'auth0GuardianJS'
   },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      include: /\.min\.js$/,
-      minimize: true
-    })
-  ]
+  mode: "production",
 };
