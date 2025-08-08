@@ -36,7 +36,8 @@
     "webpack-cli": "^6.0.1"
   },
   "scripts": {
-    "test": "npm run eslint && mocha --recursive test",
+    "test": "mocha",
+    "test:recursive": "mocha --recursive test",
     "build": "webpack --config webpack.config.js",
     "build:clean": "rm -rf ./dist && mkdir dist",
     "dist": "npm run build:clean && npm run build",
