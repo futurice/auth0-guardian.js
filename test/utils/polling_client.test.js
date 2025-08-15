@@ -548,11 +548,21 @@ describe('utils/polling_client', function () {
       if (event.stopPolling) {
         it('stops polling', function (done) {
           iPollingClient.once(event.name, () => {
-            process.nextTick(() => {
-              clock.tick(2000);
-              expect(httpClient.post.args.length).to.equal(2);
-              done();
-            });
+              /**
+               * Using real setTimeout with real, not fake, 0ms delay instead of process.nextTick due to breaking changes
+               * since Sinon 19 onwards.
+               * Other tests using nextTick, but looks like the problem is only in the specific combination
+               * like the following:
+               *
+               * process.nextTick(() => {
+               *     clock.tick();  // <-- This specific combo is the problem
+               * });
+               */
+              setTimeout(() => {
+                  clock.tick(2000);
+                  expect(httpClient.post.args.length).to.equal(2);
+                  done();
+              }, 0);
           });
 
           iPollingClient.connect({
